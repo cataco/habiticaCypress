@@ -8,11 +8,14 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "cypress": "^5.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "cypress": "^5.2.0",
+    "cypress-cucumber-preprocessor": "^2.5.5",
     "mochawesome": "^6.1.1",
     "mochawesome-report-generator": "^5.1.0"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
   }
 }
