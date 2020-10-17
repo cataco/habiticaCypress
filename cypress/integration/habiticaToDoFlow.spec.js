@@ -1,4 +1,7 @@
+const faker = require("faker");
+
 context('Habitica Tests - To Do CRUD', () => {
+    let title = faker.random.word();
 
     before(() => {
         cy.visit('https://habitica.com/static/home');
@@ -6,42 +9,42 @@ context('Habitica Tests - To Do CRUD', () => {
     })
 
 
-    it('creates a new To Do', () => {
+    it('creates a new To Do with title ' + title, () => {
         cy.get('#create-task-btn').click();
         cy.get('.create-task-btn .icon-todo').click();
-        cy.get('.input-title').type('Automation Project');
+        cy.get('.input-title').type(title);
         cy.get('input.checklist-item').type('Worker 1')
             .get('.new-icon').click()
             .get('[placeholder="New checklist item"]').type('Worker 2')
         cy.get('.btn-primary.btn-footer').click();
-        cy.contains('Automation Project').should('be.visible');
+        cy.contains(title).should('be.visible');
     });
 
-    it('reads a new To Do task', () => {
+    it('reads a new To Do task with title ' + title, () => {
         cy.wait(1000)
-            .contains('Automation Project').click();
-        cy.get('.input-title').should('have.value', 'Automation Project');
+            .contains(title).click();
+        cy.get('.input-title').should('have.value', title);
         cy.get('.difficulty-item.isButton').contains('Easy').should('be.visible');
         cy.contains('Worker 1').should('be.visible');
         cy.contains('Worker 2').should('be.visible');
     });
 
-    it('edits a new To Do task', () => {
-        cy.get('.input-title').clear().type('Automation Project - EDIT');
+    it('edits a new To Do task with title ' + title, () => {
+        cy.get('.input-title').clear().type(title + ' - EDIT');
         cy.get('.new-icon').click()
             .get('[placeholder="New checklist item"]').type('Worker 3')
         cy.get('.m-auto').click();
-        cy.contains('Automation Project - EDIT').click();
-        cy.get('.input-title').should('have.value', 'Automation Project - EDIT');
+        cy.contains(title + ' - EDIT').click();
+        cy.get('.input-title').should('have.value', title + ' - EDIT');
         cy.contains('Worker 1').should('be.visible');
         cy.contains('Worker 2').should('be.visible');
         cy.contains('Worker 3').should('be.visible');
     });
 
-    it('deletes a To Do', () => {
+    it('deletes a To Do with title ' + title, () => {
         cy.get('.delete-task-btn').click();
         cy.on('window:confirm', () => true)
-            .contains('Automation Project - EDIT').should('not.be.visible');
+            .contains(title + ' - EDIT').should('not.be.visible');
 
     });
 

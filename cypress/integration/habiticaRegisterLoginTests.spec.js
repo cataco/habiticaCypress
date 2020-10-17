@@ -1,14 +1,14 @@
+const faker = require("faker");
+
 context('Habitica Tests - Register and Login Flow', () => {
 
-    let testUser;
+    let testUser = faker.internet.userName();
 
     before(() => {
         cy.visit('https://habitica.com/static/home');
-        var randomNumber = getRandomInt(0, 1000);
-        testUser = 'cyTestUser' + randomNumber;
     })
 
-    it('creates account', () => {
+    it('creates account with user name ' + testUser, () => {
         cy.get('#usernameInput').type(testUser).should('have.value', testUser);
         cy.get('[type="email"]').type(testUser + '@email.com').should('have.value', testUser + '@email.com');
         cy.get('[placeholder="Password"]').type(testUser);
@@ -18,12 +18,8 @@ context('Habitica Tests - Register and Login Flow', () => {
 
     });
 
-    it('Logs out', () => {
-        cy.get('#menu_collapse').click();
-        cy.contains('Log Out').click({ force: true });
-    });
-
     it('Logs in', () => {
+        cy.visit('https://habitica.com/static/home');
         cy.get('.login-button').click()
             .wait(1000)
             .get('#usernameInput').type('myname123fff');
@@ -34,19 +30,12 @@ context('Habitica Tests - Register and Login Flow', () => {
         cy.contains('Log Out').click({ force: true });
     });
 
-    it('creates account with existing user data', () => {
+    it('creates account with existing user data for user '+testUser, () => {
         cy.get('#usernameInput').type(testUser).should('have.value', testUser);
         cy.get('[type="email"]').type(testUser + '@email.com').should('have.value', testUser + '@email.com');
         cy.get('[placeholder="Password"]').type(testUser);
         cy.get('[placeholder="Confirm Password"]').type(testUser);
         cy.get('.btn-info[type="submit"]').should('be.disabled');
     });
-
-   
-    function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min;
-    };
 });
 

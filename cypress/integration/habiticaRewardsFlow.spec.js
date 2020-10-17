@@ -1,4 +1,7 @@
+const faker = require("faker");
+
 context('Habitica Tests - Reward CRUD', () => {
+    let title = faker.random.word();
 
     before(() => {
         cy.visit('https://habitica.com/static/home');
@@ -6,34 +9,34 @@ context('Habitica Tests - Reward CRUD', () => {
     })
 
 
-    it('creates a new Reward', () => {
+    it('creates a new Reward with title ' + title, () => {
         cy.get('#create-task-btn').click();
         cy.get('.create-task-btn .icon-reward').click();
-        cy.get('.input-title').type('Automation Reward');
+        cy.get('.input-title').type(title);
         cy.get('.btn-primary.btn-footer').click();
-        cy.contains('Automation Reward').should('be.visible');
+        cy.contains(title).should('be.visible');
     });
 
-    it('reads a new Reward', () => {
+    it('reads a new Reward with title ' + title, () => {
         cy.wait(1000)
-            .contains('Automation Reward').click();
-        cy.get('.input-title').should('have.value', 'Automation Reward');
+            .contains(title).click();
+        cy.get('.input-title').should('have.value', title);
         cy.get('input[type="number"]').should('have.value', '10');
     });
 
-    it('edits a new Reward', () => {
-        cy.get('.input-title').clear().type('Automation Reward - EDIT');
+    it('edits a new Reward with title ' + title, () => {
+        cy.get('.input-title').clear().type(title + ' - EDIT');
         cy.get('input[type="number"]').clear().type('21');
         cy.get('.m-auto').click();
-        cy.contains('Automation Reward - EDIT').click();
-        cy.get('.input-title').should('have.value', 'Automation Reward - EDIT');
+        cy.contains(title + ' - EDIT').click();
+        cy.get('.input-title').should('have.value', title + ' - EDIT');
         cy.get('input[type="number"]').should('have.value', '21');
     });
 
-    it('deletes a Reward', () => {
+    it('deletes a Reward with title ' + title, () => {
         cy.get('.delete-task-btn').click();
         cy.on('window:confirm', () => true)
-            .contains('Automation Reward - EDIT').should('not.be.visible');
+            .contains(title + ' - EDIT').should('not.be.visible');
 
     });
 
