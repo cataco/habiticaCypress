@@ -9,7 +9,8 @@ context('Habitica Tests - Party Flow', () => {
         cy.contains('Start a Party').click();
         cy.contains('Create a Party').click();
         cy.contains("myname123fff's Party").should('be.visible');
-        cy.get('.item-with-icon .number').should('have.text', '1')
+        cy.get('.item-with-icon .number').should('have.text', '1');
+        cy.screenshot();
     });
 
     it('edits a party', () => {

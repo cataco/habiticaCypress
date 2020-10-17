@@ -10,6 +10,7 @@ context('Habitica Tests - Shop Flow', () => {
         cy.get('.item-wrapper').first().click()
             .get('button.notEnough').should('exist')
             .get('.close-icon').click({ force: true });
+        cy.screenshot();
     });
 
     function login() {

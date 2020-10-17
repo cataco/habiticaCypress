@@ -44,6 +44,7 @@ context('Habitica Tests - Habit CRUD', () => {
         cy.get('.delete-task-btn').click();
         cy.on('window:confirm', () => true)
             .contains(title + ' - EDIT').should('not.be.visible');
+        cy.screenshot();
 
     });
 
