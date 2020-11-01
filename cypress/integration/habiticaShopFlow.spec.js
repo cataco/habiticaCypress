@@ -6,11 +6,16 @@ context('Habitica Tests - Shop Flow', () => {
     })
 
     it('Tries to shop item', () => {
+        cy.screenshot("step_before_click_shop_menu");
         cy.get('.nav-link[href="/shops/market"]').click();
+        cy.screenshot("step_after_click_shop_menu");
+        cy.wait(2000);
+        cy.screenshot("step_before_click_item");
         cy.get('.item-wrapper').first().click()
             .get('button.notEnough').should('exist')
+            .wait(1000)
             .get('.close-icon').click({ force: true });
-        cy.screenshot();
+        cy.screenshot("step_after_click_item");
     });
 
     function login() {
